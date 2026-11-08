@@ -1,0 +1,20 @@
+name: market_correlation_discovery
+version: "0.1.0"
+config-version: 2
+
+profile: market_correlation_discovery
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+models:
+  market_correlation_discovery:
+    staging:
+      +materialized: view
+      +schema: silver
+    intermediate:
+      +materialized: view
+      +schema: silver
+    marts:
+      +materialized: table
+      +schema: gold

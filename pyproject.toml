@@ -1,0 +1,27 @@
+[project]
+name = "market-correlation-discovery"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[tool.uv.workspace]
+members = ["ingestion", "analysis", "backend"]
+
+[tool.pytest.ini_options]
+testpaths = ["ingestion/tests", "analysis/tests", "backend/tests"]
+
+[dependency-groups]
+db = [
+    "alembic>=1.20.1",
+    "psycopg[binary]>=3.3.8",
+    "python-dotenv>=1.2.4",
+    "sqlalchemy>=2.1.8",
+]
+dev = [
+    "nbstripout>=0.9.1",
+    "pre-commit>=4.7.0",
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+transform = [
+    "dbt-postgres>=1.11.0",
+]
