@@ -43,32 +43,3 @@ make lint                   # the same check CI runs; must pass
 ```
 
 `uv run pre-commit install` runs these automatically on commit. Ruff is pinned to the same version in the lockfile and the pre-commit config, so local results match CI.
-
-### Branch protection (one-time, repo admin)
-
-Settings → Branches → Add rule for `main`:
-
-- Require a pull request before merging (0 approvals is fine for a solo repo; raise it once there is a team).
-- Require status checks to pass before merging, and select `lint`.
-- Require branches to be up to date before merging.
-- Do not allow bypassing the above settings.
-- Block force pushes and branch deletion.
-
-Or with the GitHub CLI (requires admin rights):
-
-```bash
-gh api -X PUT repos/Market-Correlation-Discovery/market-correlation-discovery/branches/main/protection \
-  -H "Accept: application/vnd.github+json" \
-  --input - <<'JSON'
-{
-  "required_status_checks": { "strict": true, "contexts": ["lint"] },
-  "enforce_admins": true,
-  "required_pull_request_reviews": { "required_approving_review_count": 0 },
-  "restrictions": null,
-  "allow_force_pushes": false,
-  "allow_deletions": false
-}
-JSON
-```
-
-Note: the `lint` context only appears after the workflow has run at least once on a PR or push to `main`.
